@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ranit Das — Data Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f0e8;
-    --bg2: #ede8df;
-    --paper: #faf8f4;
-    --text: #1a1814;
-    --muted: #7a7468;
-    --accent: #b5451b;
-    --accent2: #2a6049;
+    --bg:           #f5f0e8;
+    --paper:        #faf8f4;
+    --text:         #1a1814;
+    --muted:        #7a7468;
+    --accent:       #b5451b;
+    --accent2:      #2a6049;
     --accent-light: rgba(181,69,27,0.08);
-    --border: rgba(26,24,20,0.1);
-    --shadow: 0 2px 30px rgba(26,24,20,0.06);
+    --border:       rgba(26,24,20,0.12);
+    --shadow:       0 2px 30px rgba(26,24,20,0.07);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,6 +34,7 @@
     cursor: none;
   }
 
+  /* ── Cursor ─────────────────────────────────────────── */
   .cursor {
     width: 10px; height: 10px;
     background: var(--accent);
@@ -53,41 +54,36 @@
     z-index: 9998;
     transform: translate(-50%, -50%);
     opacity: 0.4;
-    transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1), height 0.3s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
+    transition: width 0.3s cubic-bezier(0.23,1,0.32,1),
+                height 0.3s cubic-bezier(0.23,1,0.32,1),
+                opacity 0.3s;
   }
   .cursor-ring.hover { width: 64px; height: 64px; opacity: 0.2; }
 
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9990;
-    opacity: 0.5;
-  }
-
+  /* ── Nav ────────────────────────────────────────────── */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 24px 56px;
+    z-index: 200;
+    padding: 22px 56px;
     display: flex; justify-content: space-between; align-items: center;
     transition: background 0.4s, border-color 0.4s, padding 0.3s;
     border-bottom: 1px solid transparent;
   }
   nav.scrolled {
-    background: rgba(245,240,232,0.92);
+    background: rgba(245,240,232,0.94);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-color: var(--border);
-    padding: 16px 56px;
+    padding: 14px 56px;
   }
   .nav-logo {
     font-family: 'Playfair Display', serif;
     font-size: 18px; font-style: italic;
     color: var(--text); text-decoration: none;
   }
-  .nav-links { display: flex; gap: 36px; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
   .nav-links a {
-    font-size: 12px; font-weight: 400;
+    font-size: 11px; font-weight: 400;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--muted); text-decoration: none;
     transition: color 0.3s; position: relative;
@@ -99,8 +95,19 @@
   }
   .nav-links a:hover { color: var(--accent); }
   .nav-links a:hover::after { width: 100%; }
+  .nav-cv-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px;
+    background: var(--accent); color: #fff !important;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cv-btn:hover { background: #9e3a14 !important; transform: translateY(-1px); }
+  .nav-cv-btn::after { display: none !important; }
 
-  /* HERO */
+  /* ── Hero ───────────────────────────────────────────── */
   .hero {
     min-height: 100vh;
     display: grid; grid-template-columns: 1fr 1fr;
@@ -128,7 +135,7 @@
     margin-bottom: 28px;
     opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
   }
-  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); display: block; }
   .hero-name {
     font-family: 'Playfair Display', serif;
     font-size: clamp(52px, 7vw, 86px); font-weight: 700;
@@ -147,12 +154,14 @@
     opacity: 0; animation: fadeUp 0.9s 0.65s forwards;
   }
   .hero-actions {
-    display: flex; gap: 16px; flex-wrap: wrap;
+    display: flex; gap: 14px; flex-wrap: wrap;
     opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
   }
+
+  /* Buttons */
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 30px; font-family: 'Outfit', sans-serif;
+    padding: 12px 28px; font-family: 'Outfit', sans-serif;
     font-size: 12px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     text-decoration: none; cursor: none; transition: all 0.3s;
@@ -161,14 +170,17 @@
   .btn-primary:hover { background: #9e3a14; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(181,69,27,0.25); }
   .btn-outline { border: 1.5px solid var(--border); color: var(--muted); }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-download { border: 1.5px solid var(--accent2); color: var(--accent2); background: transparent; }
+  .btn-download:hover { background: var(--accent2); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(42,96,73,0.2); }
 
+  /* Hero stat cards */
   .hero-right {
     display: flex; flex-direction: column; gap: 16px;
     opacity: 0; animation: fadeIn 1s 1s forwards;
   }
   .stat-card {
     background: var(--paper); border: 1px solid var(--border);
-    padding: 24px 28px; display: flex; align-items: center; gap: 20px;
+    padding: 22px 28px; display: flex; align-items: center; gap: 20px;
     box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s;
   }
   .stat-card:hover { transform: translateX(6px); box-shadow: 0 8px 40px rgba(26,24,20,0.1); }
@@ -178,19 +190,22 @@
     display: flex; align-items: center; justify-content: center;
     background: var(--accent-light);
   }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--accent); line-height: 1; }
-  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
-  /* Section */
-  section { padding: 96px 56px; }
-  section:nth-of-type(even) { background: var(--paper); }
+  /* ── Section shared ─────────────────────────────────── */
+  .section-bg { background: var(--bg); }
+  .section-paper { background: var(--paper); }
+
+  .section-wrap { padding: 96px 56px; }
   .container { max-width: 960px; margin: 0 auto; }
+
   .section-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 56px; }
   .section-num { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.15em; }
   .section-title { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; letter-spacing: -0.01em; }
-  .section-rule { flex: 1; height: 1px; background: var(--border); }
+  .section-rule { flex: 1; height: 1px; background: var(--border); margin-left: 4px; }
 
-  /* Skills */
+  /* ── Skills ─────────────────────────────────────────── */
   .skills-wrap { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 14px; }
   .skill-pill {
     background: var(--bg); border: 1px solid var(--border);
@@ -198,9 +213,10 @@
     color: var(--text); display: flex; align-items: center; gap: 10px;
     transition: all 0.3s; cursor: none;
   }
+  .section-paper .skill-pill { background: var(--paper); }
   .skill-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(181,69,27,0.2); }
 
-  /* Timeline */
+  /* ── Timeline ───────────────────────────────────────── */
   .timeline { position: relative; padding-left: 32px; }
   .timeline::before {
     content: ''; position: absolute;
@@ -208,10 +224,11 @@
     width: 1px; background: var(--border);
   }
   .timeline-item {
-    position: relative; margin-bottom: 56px;
+    position: relative; margin-bottom: 52px;
     opacity: 0; transform: translateY(24px);
     transition: opacity 0.6s, transform 0.6s;
   }
+  .timeline-item:last-child { margin-bottom: 0; }
   .timeline-item.visible { opacity: 1; transform: translateY(0); }
   .timeline-item::before {
     content: ''; position: absolute; left: -36px; top: 8px;
@@ -219,22 +236,23 @@
     background: var(--accent); border: 2px solid var(--bg);
     box-shadow: 0 0 0 1px var(--accent);
   }
-  .timeline-date { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .section-paper .timeline-item::before { border-color: var(--paper); }
+  .timeline-date { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
   .timeline-role { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-bottom: 2px; }
   .timeline-company { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
   .timeline-team {
     display: inline-block; font-size: 11px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent2); background: rgba(42,96,73,0.08);
-    padding: 3px 10px; margin-bottom: 18px;
+    color: var(--accent2); background: rgba(42,96,73,0.1);
+    padding: 3px 10px; margin-bottom: 16px; border-radius: 2px;
   }
-  .timeline-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .timeline-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .timeline-list li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.7; }
-  .timeline-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 2px; }
-  .achievements { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .timeline-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 3px; }
+  .achievements { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
   .ach-tag { font-size: 11px; background: rgba(181,69,27,0.07); color: var(--accent); border: 1px solid rgba(181,69,27,0.15); padding: 4px 12px; font-weight: 500; }
 
-  /* Certs */
+  /* ── Certs ──────────────────────────────────────────── */
   .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
   .cert-card {
     background: var(--paper); border: 1px solid var(--border);
@@ -243,6 +261,7 @@
     opacity: 0; transform: translateY(24px);
     transition: opacity 0.6s, transform 0.6s, box-shadow 0.3s;
   }
+  .section-bg .cert-card { background: var(--paper); }
   .cert-card.visible { opacity: 1; transform: translateY(0); }
   .cert-card:hover { box-shadow: 0 12px 48px rgba(26,24,20,0.1); }
   .cert-card::before {
@@ -255,7 +274,7 @@
   .cert-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 6px; }
   .cert-org { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
 
-  /* Project */
+  /* ── Project ────────────────────────────────────────── */
   .project-wrap {
     background: var(--paper); border: 1px solid var(--border);
     padding: 48px; display: grid; grid-template-columns: 1fr auto;
@@ -271,12 +290,12 @@
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--accent); text-decoration: none; white-space: nowrap;
-    padding: 12px 24px; border: 1.5px solid var(--accent); transition: all 0.3s;
-    align-self: flex-start;
+    padding: 12px 24px; border: 1.5px solid var(--accent);
+    transition: all 0.3s; align-self: flex-start;
   }
   .project-link:hover { background: var(--accent); color: #fff; }
 
-  /* Education */
+  /* ── Education ──────────────────────────────────────── */
   .edu-card {
     background: var(--paper); border: 1px solid var(--border);
     padding: 36px 40px; display: flex; justify-content: space-between; align-items: center;
@@ -286,18 +305,19 @@
   .edu-card.visible { opacity: 1; transform: translateY(0); }
   .edu-degree { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
   .edu-school { font-size: 13px; color: var(--muted); }
+  .edu-year  { font-size: 12px; color: var(--muted); margin-top: 6px; }
   .edu-right { text-align: right; }
   .edu-gpa { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--accent); line-height: 1; }
   .edu-gpa-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
 
-  /* Contact */
-  #contact { text-align: center; }
+  /* ── Contact ────────────────────────────────────────── */
+  .contact-inner { max-width: 720px; margin: 0 auto; text-align: center; }
   .contact-pre {
     font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--accent); margin-bottom: 20px;
     display: flex; align-items: center; justify-content: center; gap: 12px;
   }
-  .contact-pre::before, .contact-pre::after { content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .contact-pre::before, .contact-pre::after { content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.4; display: block; }
   .contact-heading { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 72px); font-weight: 700; line-height: 1.05; margin-bottom: 16px; }
   .contact-heading em { font-style: italic; color: var(--accent); }
   .contact-sub { font-size: 14px; color: var(--muted); margin-bottom: 48px; }
@@ -306,64 +326,37 @@
   .contact-item:hover { transform: translateY(-4px); }
   .contact-icon { width: 48px; height: 48px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 4px; }
   .contact-label { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .contact-val { font-size: 13px; color: var(--text); font-weight: 400; }
+  .contact-val { font-size: 13px; color: var(--text); }
   .contact-item:hover .contact-val { color: var(--accent); }
 
+  /* ── Footer ─────────────────────────────────────────── */
   footer {
-    background: var(--text); color: rgba(245,240,232,0.4);
-    padding: 28px 56px; display: flex; justify-content: space-between; align-items: center;
+    background: var(--text); color: rgba(245,240,232,0.45);
+    padding: 26px 56px; display: flex; justify-content: space-between; align-items: center;
     font-size: 11px; letter-spacing: 0.08em;
   }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  /* ── Animations ─────────────────────────────────────── */
+  @keyframes fadeUp  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
 
-  @media (max-width: 768px) {
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 860px) {
     nav, nav.scrolled { padding: 18px 24px; }
-    .nav-links { gap: 20px; }
+    .nav-links { gap: 16px; }
     .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
     .hero-right { display: none; }
-    section { padding: 72px 24px; }
+    .section-wrap { padding: 72px 24px; }
     .project-wrap { grid-template-columns: 1fr; }
     .edu-card { flex-direction: column; gap: 16px; }
     .edu-right { text-align: left; }
     footer { padding: 20px 24px; flex-direction: column; gap: 6px; text-align: center; }
   }
-
-  .btn-download {
-    background: transparent;
-    border: 1.5px solid var(--accent2);
-    color: var(--accent2);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  @media (max-width: 480px) {
+    .nav-links a:not(.nav-cv-btn) { display: none; }
+    .hero-actions { flex-direction: column; }
+    .btn { justify-content: center; }
   }
-  .btn-download:hover {
-    background: var(--accent2);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(42,96,73,0.2);
-  }
-  .nav-cv-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 16px;
-    background: var(--accent);
-    color: #fff !important;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background 0.3s, transform 0.2s;
-  }
-  .nav-cv-btn:hover {
-    background: #9e3a14 !important;
-    transform: translateY(-1px);
-  }
-  .nav-cv-btn::after { display: none !important; }
-
 </style>
 </head>
 <body>
@@ -371,6 +364,7 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">Ranit Das</a>
   <div class="nav-links">
@@ -379,14 +373,14 @@
     <a href="#certifications">Certs</a>
     <a href="#contact">Contact</a>
     <a href="Ranit_Das_CV.pdf" download="Ranit_Das_CV.pdf" class="nav-cv-btn">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      CV
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download CV
     </a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero">
   <div class="hero-deco"></div>
   <div class="hero-deco2"></div>
   <div>
@@ -396,9 +390,9 @@
     <p class="hero-desc">Building robust ETL pipelines and cloud data infrastructure across Azure, Snowflake, and Databricks — translating raw data into decisions that matter.</p>
     <div class="hero-actions">
       <a href="#experience" class="btn btn-primary">View Work ↓</a>
-      <a href="/cdn-cgi/l/email-protection#6113000f08154f0500124f05041721060c00080d4f020e0c" class="btn btn-outline">Get In Touch</a>
+      <a href="mailto:ranit.das.dev@gmail.com" class="btn btn-outline">Get In Touch</a>
       <a href="Ranit_Das_CV.pdf" download="Ranit_Das_CV.pdf" class="btn btn-download">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download CV
       </a>
     </div>
@@ -406,173 +400,188 @@
   <div class="hero-right">
     <div class="stat-card"><div class="stat-icon">⚡</div><div><div class="stat-num">5</div><div class="stat-label">Years of Experience</div></div></div>
     <div class="stat-card"><div class="stat-icon">🏅</div><div><div class="stat-num">4</div><div class="stat-label">Professional Certifications</div></div></div>
-    <div class="stat-card"><div class="stat-icon">☁</div><div><div class="stat-num">10+</div><div class="stat-label">Cloud & Data Tools</div></div></div>
+    <div class="stat-card"><div class="stat-icon">☁</div><div><div class="stat-num">10+</div><div class="stat-label">Cloud &amp; Data Tools</div></div></div>
     <div class="stat-card"><div class="stat-icon">🎓</div><div><div class="stat-num">8.10</div><div class="stat-label">CGPA — B.Tech EEE</div></div></div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <div class="section-header"><span class="section-num">01</span><h2 class="section-title">Skills</h2><div class="section-rule"></div></div>
-    <div class="skills-wrap">
-      <div class="skill-pill"><span>💻</span> SQL</div>
-      <div class="skill-pill"><span>🐍</span> Python</div>
-      <div class="skill-pill"><span>✨</span> PySpark</div>
-      <div class="skill-pill"><span>☁</span> Azure Data Factory</div>
-      <div class="skill-pill"><span>🔷</span> Azure Databricks</div>
-      <div class="skill-pill"><span>🗄</span> Azure SQL</div>
-      <div class="skill-pill"><span>🖥</span> MS SQL Server</div>
-      <div class="skill-pill"><span>📊</span> Power BI</div>
-      <div class="skill-pill"><span>❄</span> Snowflake</div>
-      <div class="skill-pill"><span>🔧</span> DBT</div>
-      <div class="skill-pill"><span>🌊</span> Delta Lake</div>
-      <div class="skill-pill"><span>💾</span> Data Lake</div>
-      <div class="skill-pill"><span>🔁</span> Airflow</div>
-      <div class="skill-pill"><span>📦</span> SSIS</div>
-      <div class="skill-pill"><span>🛠</span> Azure DevOps</div>
-      <div class="skill-pill"><span>🐙</span> GitHub</div>
+<div class="section-paper" id="skills">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header"><span class="section-num">01</span><h2 class="section-title">Skills</h2><div class="section-rule"></div></div>
+      <div class="skills-wrap">
+        <div class="skill-pill"><span>💻</span> SQL</div>
+        <div class="skill-pill"><span>🐍</span> Python</div>
+        <div class="skill-pill"><span>✨</span> PySpark</div>
+        <div class="skill-pill"><span>☁</span> Azure Data Factory</div>
+        <div class="skill-pill"><span>🔷</span> Azure Databricks</div>
+        <div class="skill-pill"><span>🗄</span> Azure SQL</div>
+        <div class="skill-pill"><span>🖥</span> MS SQL Server</div>
+        <div class="skill-pill"><span>📊</span> Power BI</div>
+        <div class="skill-pill"><span>❄</span> Snowflake</div>
+        <div class="skill-pill"><span>🔧</span> DBT</div>
+        <div class="skill-pill"><span>🌊</span> Delta Lake</div>
+        <div class="skill-pill"><span>💾</span> Data Lake</div>
+        <div class="skill-pill"><span>🔁</span> Airflow</div>
+        <div class="skill-pill"><span>📦</span> SSIS</div>
+        <div class="skill-pill"><span>🛠</span> Azure DevOps</div>
+        <div class="skill-pill"><span>🐙</span> GitHub</div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="section-header"><span class="section-num">02</span><h2 class="section-title">Experience</h2><div class="section-rule"></div></div>
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <div class="timeline-date">Jan 2023 – Present</div>
-        <div class="timeline-role">Data Engineer</div>
-        <div class="timeline-company">Cognizant Technology Solutions</div>
-        <div class="timeline-team">Marketing Team</div>
-        <ul class="timeline-list">
-          <li>Built ETL pipelines using ADF, SSIS, and SQL Server jobs with comprehensive data quality checks.</li>
-          <li>Expert SQL querying and data transformation per complex business requirements.</li>
-          <li>Delivered data to Salesforce Financial Cloud and Salesforce Marketing Cloud.</li>
-          <li>Migrated existing solution to Snowflake with transformation logic implemented in DBT.</li>
-        </ul>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-date">Nov 2020 – Dec 2022</div>
-        <div class="timeline-role">ETL Developer</div>
-        <div class="timeline-company">Cognizant Technology Solutions</div>
-        <div class="timeline-team">Data Warehouse Team</div>
-        <ul class="timeline-list">
-          <li>Designed and enhanced a complete Data Warehouse — heterogeneous ingestion, DW/DataMart loading, and report publishing.</li>
-          <li>Developed ETL pipelines with star & Snowflake schema architecture using ADF, SSIS, and SQL Server.</li>
-          <li>Reverse-engineered complex stored procedures and legacy ETL pipelines.</li>
-          <li>Maintained smooth production operations and on-call support.</li>
-        </ul>
-        <div class="achievements">
-          <span class="ach-tag">✦ End-to-end pipelines for new data sources</span>
-          <span class="ach-tag">✦ Power BI dashboards for DB tracking</span>
+<div class="section-bg" id="experience">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header"><span class="section-num">02</span><h2 class="section-title">Experience</h2><div class="section-rule"></div></div>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Jan 2023 – Present</div>
+          <div class="timeline-role">Data Engineer</div>
+          <div class="timeline-company">Cognizant Technology Solutions</div>
+          <div class="timeline-team">Marketing Team</div>
+          <ul class="timeline-list">
+            <li>Built ETL pipelines using ADF, SSIS, and SQL Server jobs with comprehensive data quality checks.</li>
+            <li>Expert SQL querying and data transformation per complex business requirements.</li>
+            <li>Delivered data to Salesforce Financial Cloud and Salesforce Marketing Cloud.</li>
+            <li>Migrated existing solution to Snowflake with transformation logic implemented in DBT.</li>
+          </ul>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Nov 2020 – Dec 2022</div>
+          <div class="timeline-role">ETL Developer</div>
+          <div class="timeline-company">Cognizant Technology Solutions</div>
+          <div class="timeline-team">Data Warehouse Team</div>
+          <ul class="timeline-list">
+            <li>Designed and enhanced a complete Data Warehouse — heterogeneous ingestion, DW/DataMart loading, and report publishing.</li>
+            <li>Developed ETL pipelines with star &amp; Snowflake schema architecture using ADF, SSIS, and SQL Server.</li>
+            <li>Reverse-engineered complex stored procedures and legacy ETL pipelines.</li>
+            <li>Maintained smooth production operations and on-call support.</li>
+          </ul>
+          <div class="achievements">
+            <span class="ach-tag">✦ End-to-end pipelines for new data sources</span>
+            <span class="ach-tag">✦ Power BI dashboards for DB tracking</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- EDUCATION -->
-<section id="education">
-  <div class="container">
-    <div class="section-header"><span class="section-num">03</span><h2 class="section-title">Education</h2><div class="section-rule"></div></div>
-    <div class="edu-card reveal">
-      <div>
-        <div class="edu-degree">Bachelor of Technology — EEE</div>
-        <div class="edu-school">Heritage Institute of Technology, Kolkata</div>
-        <div style="margin-top:8px; font-size:12px; color:var(--muted);">2016 – 2020</div>
-      </div>
-      <div class="edu-right">
-        <div class="edu-gpa">8.10</div>
-        <div class="edu-gpa-label">CGPA</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="container">
-    <div class="section-header"><span class="section-num">04</span><h2 class="section-title">Certifications</h2><div class="section-rule"></div></div>
-    <div class="cert-grid">
-      <div class="cert-card reveal"><div class="cert-badge">🔷</div><div class="cert-name">Data Engineer Associate</div><div class="cert-org">Microsoft · DP-203</div></div>
-      <div class="cert-card reveal"><div class="cert-badge">◈</div><div class="cert-name">Data Engineer Associate</div><div class="cert-org">Databricks</div></div>
-      <div class="cert-card reveal"><div class="cert-badge">❄</div><div class="cert-name">SnowPro Core Certification</div><div class="cert-org">Snowflake</div></div>
-      <div class="cert-card reveal"><div class="cert-badge">☁</div><div class="cert-name">Azure Fundamentals</div><div class="cert-org">Microsoft · AZ-900</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECT -->
-<section id="project">
-  <div class="container">
-    <div class="section-header"><span class="section-num">05</span><h2 class="section-title">Project</h2><div class="section-rule"></div></div>
-    <div class="project-wrap reveal">
-      <div>
-        <div class="project-title">BigData Repository</div>
-        <p class="project-desc">A fully dynamic Data Warehouse architecture built from scratch with CI/CD deployment pipelines across Azure Data Factory, Databricks, and Azure SQL using Azure DevOps. Includes custom PySpark notebooks for large-scale data processing and automated versioning workflows.</p>
-        <div class="project-pills">
-          <span class="project-pill">Azure DevOps</span>
-          <span class="project-pill">Databricks</span>
-          <span class="project-pill">ADF</span>
-          <span class="project-pill">PySpark</span>
-          <span class="project-pill">Azure SQL</span>
-          <span class="project-pill">CI/CD</span>
+<div class="section-paper" id="education">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header"><span class="section-num">03</span><h2 class="section-title">Education</h2><div class="section-rule"></div></div>
+      <div class="edu-card reveal">
+        <div>
+          <div class="edu-degree">Bachelor of Technology — EEE</div>
+          <div class="edu-school">Heritage Institute of Technology, Kolkata</div>
+          <div class="edu-year">2016 – 2020</div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-gpa">8.10</div>
+          <div class="edu-gpa-label">CGPA</div>
         </div>
       </div>
-      <a href="https://github.com/ranitdas-dev/BigData-Repo" target="_blank" class="project-link">GitHub →</a>
     </div>
   </div>
-</section>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="section-bg" id="certifications">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header"><span class="section-num">04</span><h2 class="section-title">Certifications</h2><div class="section-rule"></div></div>
+      <div class="cert-grid">
+        <div class="cert-card reveal"><div class="cert-badge">🔷</div><div class="cert-name">Data Engineer Associate</div><div class="cert-org">Microsoft · DP-203</div></div>
+        <div class="cert-card reveal"><div class="cert-badge">◈</div><div class="cert-name">Data Engineer Associate</div><div class="cert-org">Databricks</div></div>
+        <div class="cert-card reveal"><div class="cert-badge">❄</div><div class="cert-name">SnowPro Core Certification</div><div class="cert-org">Snowflake</div></div>
+        <div class="cert-card reveal"><div class="cert-badge">☁</div><div class="cert-name">Azure Fundamentals</div><div class="cert-org">Microsoft · AZ-900</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT -->
+<div class="section-paper" id="project">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header"><span class="section-num">05</span><h2 class="section-title">Project</h2><div class="section-rule"></div></div>
+      <div class="project-wrap reveal">
+        <div>
+          <div class="project-title">BigData Repository</div>
+          <p class="project-desc">A fully dynamic Data Warehouse architecture built from scratch with CI/CD deployment pipelines across Azure Data Factory, Databricks, and Azure SQL using Azure DevOps. Includes custom PySpark notebooks for large-scale data processing and automated versioning workflows.</p>
+          <div class="project-pills">
+            <span class="project-pill">Azure DevOps</span>
+            <span class="project-pill">Databricks</span>
+            <span class="project-pill">ADF</span>
+            <span class="project-pill">PySpark</span>
+            <span class="project-pill">Azure SQL</span>
+            <span class="project-pill">CI/CD</span>
+          </div>
+        </div>
+        <a href="https://github.com/ranitdas-dev/BigData-Repo" target="_blank" rel="noopener" class="project-link">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-pre">Open to Opportunities</div>
-    <h2 class="contact-heading">Let's build<br><em>together.</em></h2>
-    <p class="contact-sub">Currently based in Vilnius, Lithuania. Open to data engineering roles and interesting collaborations.</p>
-    <div class="contact-grid">
-      <a href="/cdn-cgi/l/email-protection#d4a6b5babda0fab0b5a7fab0b1a294b3b9b5bdb8fab7bbb9" class="contact-item">
-        <div class="contact-icon">✉</div>
-        <div class="contact-label">Email</div>
-        <div class="contact-val"><span class="__cf_email__" data-cfemail="5f2d3e31362b713b3e2c713b3a291f38323e3633713c3032">[email&#160;protected]</span></div>
-      </a>
-      <a href="tel:+37064935248" class="contact-item">
-        <div class="contact-icon">📱</div>
-        <div class="contact-label">Phone</div>
-        <div class="contact-val">+370 649 35248</div>
-      </a>
-      <a href="https://www.linkedin.com/in/ranit-das-9b025837b" target="_blank" class="contact-item">
-        <div class="contact-icon">in</div>
-        <div class="contact-label">LinkedIn</div>
-        <div class="contact-val">ranit-das-9b025837b</div>
-      </a>
+<div class="section-bg" id="contact">
+  <div class="section-wrap">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-pre">Open to Opportunities</div>
+        <h2 class="contact-heading">Let's build<br><em>together.</em></h2>
+        <p class="contact-sub">Currently based in Vilnius, Lithuania. Open to data engineering roles and interesting collaborations.</p>
+        <div class="contact-grid">
+          <a href="mailto:ranit.das.dev@gmail.com" class="contact-item">
+            <div class="contact-icon">✉</div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val">ranit.das.dev@gmail.com</div>
+          </a>
+          <a href="tel:+37064935248" class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-val">+370 649 35248</div>
+          </a>
+          <a href="https://www.linkedin.com/in/ranit-das-9b025837b" target="_blank" rel="noopener" class="contact-item">
+            <div class="contact-icon">in</div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-val">ranit-das-9b025837b</div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <footer>
   <span>© 2025 Ranit Das</span>
   <span>Data Engineer · Vilnius, Lithuania</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  // Custom cursor
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+  const ring   = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+    cursor.style.top  = my + 'px';
   });
 
   (function loop() {
     rx += (mx - rx) * 0.1;
     ry += (my - ry) * 0.1;
     ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
+    ring.style.top  = ry + 'px';
     requestAnimationFrame(loop);
   })();
 
@@ -581,11 +590,24 @@
     el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
   });
 
+  // Scrolled nav
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
   });
 
+  // Scroll reveal
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const siblings = Array.from(e.target.parentElement.querySelectorAll('.reveal
+        const siblings = Array.from(e.target.parentElement.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(e.target);
+        setTimeout(() => e.target.classList.add('visible'), idx * 100);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
